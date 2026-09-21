@@ -391,7 +391,7 @@ if page == "🏠  Home":
                 coloraxis_showscale=False,
                 xaxis=dict(showgrid=False), yaxis=dict(showgrid=False)
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.info("Dataset not available for chart.")
 
@@ -421,7 +421,7 @@ if page == "🏠  Home":
                 data=export_df.to_csv(index=False).encode("utf-8"),
                 file_name="ibm_hr_all_employees_risk_predictions.csv",
                 mime="text/csv",
-                use_container_width=True,
+                width="stretch",
             )
         with cdl2:
             high_risk = export_df[export_df["Risk Level"] == "High Risk"].copy()
@@ -430,7 +430,7 @@ if page == "🏠  Home":
                 data=high_risk.to_csv(index=False).encode("utf-8"),
                 file_name="ibm_hr_high_risk_employees.csv",
                 mime="text/csv",
-                use_container_width=True,
+                width="stretch",
             )
     else:
         st.warning("Model data is not available yet. Please generate the model before downloading predictions.")
@@ -466,7 +466,7 @@ elif page == "📊  EDA":
         fig.update_layout(height=320, showlegend=False,
                           paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                           margin=dict(l=0, r=0, t=20, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.markdown(f'<div class="insight-box">💡 <strong>{round(dff["Attrition"].eq("Yes").mean()*100,1)}%</strong> of selected employees left — significant class imbalance addressed with SMOTE during model training.</div>', unsafe_allow_html=True)
 
     # Chart 2 — Age distribution
@@ -479,7 +479,7 @@ elif page == "📊  EDA":
         fig.update_layout(height=320, paper_bgcolor="rgba(0,0,0,0)",
                           plot_bgcolor="rgba(0,0,0,0)",
                           margin=dict(l=0, r=0, t=20, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.markdown(f'<div class="insight-box">💡 Younger employees (25–35) show higher attrition rates. Median age of leavers is lower than stayers.</div>', unsafe_allow_html=True)
 
     row2_l, row2_r = st.columns(2)
@@ -494,7 +494,7 @@ elif page == "📊  EDA":
         fig.update_layout(height=320, showlegend=False,
                           paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                           margin=dict(l=0, r=0, t=20, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.markdown(f'<div class="insight-box">💡 Employees who left earned significantly less on average (${int(dff[dff["Attrition"]=="Yes"]["MonthlyIncome"].mean()):,}) vs those who stayed (${int(dff[dff["Attrition"]=="No"]["MonthlyIncome"].mean()):,}).</div>', unsafe_allow_html=True)
 
     # Chart 4 — OverTime attrition
@@ -510,7 +510,7 @@ elif page == "📊  EDA":
         fig.update_layout(height=320, paper_bgcolor="rgba(0,0,0,0)",
                           plot_bgcolor="rgba(0,0,0,0)",
                           margin=dict(l=0, r=0, t=20, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         ot_yes = dff[dff["OverTime"]=="Yes"]["Attrition"].eq("Yes").mean()*100
         ot_no  = dff[dff["OverTime"]=="No"]["Attrition"].eq("Yes").mean()*100
         st.markdown(f'<div class="insight-box">💡 Overtime workers leave at <strong>{ot_yes:.0f}%</strong> vs <strong>{ot_no:.0f}%</strong> for non-overtime — a {round(ot_yes/ot_no,1)}× higher risk.</div>', unsafe_allow_html=True)
@@ -532,7 +532,7 @@ elif page == "📊  EDA":
         fig.update_layout(height=350, coloraxis_showscale=False,
                           paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                           margin=dict(l=0, r=30, t=20, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.markdown(f'<div class="insight-box">💡 Sales Representatives have the highest attrition rate. Research Directors and Managers have the lowest.</div>', unsafe_allow_html=True)
 
     # Chart 6 — Work-Life Balance
@@ -552,7 +552,7 @@ elif page == "📊  EDA":
         fig.update_layout(height=350, coloraxis_showscale=False,
                           paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                           margin=dict(l=0, r=0, t=20, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.markdown(f'<div class="insight-box">💡 Employees with the worst work-life balance (score=1) leave at the highest rate. Improving this metric is a high-ROI HR intervention.</div>', unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -591,7 +591,7 @@ elif page == "🔮  Predict Risk":
             business_travel  = st.selectbox("Business Travel", [0, 1, 2],
                                             format_func=lambda x: ["Non-Travel","Travel_Rarely","Travel_Frequently"][x])
 
-        submitted = st.form_submit_button("🔮  Predict Attrition Risk", use_container_width=True)
+        submitted = st.form_submit_button("🔮  Predict Attrition Risk", width="stretch")
 
     if submitted:
         payload = {
@@ -687,7 +687,7 @@ elif page == "🔮  Predict Risk":
                 fig.update_layout(height=280, margin=dict(l=20,r=20,t=30,b=10),
                                   paper_bgcolor="rgba(0,0,0,0)",
                                   font={"color": C_TEXT})
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE 4 — MODEL PERFORMANCE
@@ -759,7 +759,7 @@ elif page == "📈  Model Performance":
             ))
             fig.update_layout(height=260, margin=dict(l=20,r=20,t=40,b=10),
                               paper_bgcolor="rgba(0,0,0,0)", font={"color": C_TEXT})
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
     # ── Confusion matrix + Feature importance ──
     cm_col, fi_col = st.columns(2)
@@ -781,7 +781,7 @@ elif page == "📈  Model Performance":
             margin=dict(l=10, r=10, t=10, b=10),
             font={"color": C_TEXT}
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         st.markdown(f'<div class="insight-box">💡 Only 29–30 misclassifications out of 494 test samples. Balanced FP/FN thanks to SMOTE + balanced class weights.</div>', unsafe_allow_html=True)
 
     with fi_col:
@@ -813,7 +813,7 @@ elif page == "📈  Model Performance":
     comp_img = os.path.join(IMG_DIR, "model_comparison.png")
     if os.path.exists(comp_img):
         from PIL import Image as PILImage
-        st.image(PILImage.open(comp_img), use_container_width=True)
+        st.image(PILImage.open(comp_img), width="stretch")
     else:
         st.info("Run train_model.py or the notebook to generate model_comparison.png")
 
@@ -831,7 +831,7 @@ elif page == "📈  Model Performance":
             return [f"background-color: rgba(63,185,80,0.15); color: #3fb950; font-weight:700"] * len(row)
         return [""] * len(row)
     st.dataframe(df_comp.style.apply(highlight_best, axis=1),
-                 use_container_width=True, hide_index=True)
+                 width="stretch", hide_index=True)
     st.markdown(f'<div class="insight-box">💡 <strong>XGBoost</strong> achieves the highest ROC-AUC (96.86%) and Accuracy (90.08%), outperforming Random Forest by ~1.5%. Random Forest is deployed in production as model.pkl due to its interpretability and stable feature importances.</div>', unsafe_allow_html=True)
 
     # ── Sample predictions table ──
@@ -841,7 +841,7 @@ elif page == "📈  Model Performance":
         df_s = pd.DataFrame(samples["sample_predictions"])
         df_s["prediction"] = df_s["prediction"].apply(
             lambda x: f"🔴 {x}" if "High" in x else f"🟢 {x}")
-        st.dataframe(df_s, use_container_width=True, hide_index=True)
+        st.dataframe(df_s, width="stretch", hide_index=True)
     elif "error" in info:
         st.warning("Flask API not reachable — start app.py first.")
 
@@ -940,7 +940,7 @@ elif page == "👥  Employee Risk Table":
         return [f"background-color: rgba(63,185,80,0.06)"] * len(row)
 
     styled = df_filtered.style.apply(style_risk_table, axis=1).format({"Probability %": "{:.1f}%"})
-    st.dataframe(styled, use_container_width=True, hide_index=True, height=480)
+    st.dataframe(styled, width="stretch", hide_index=True, height=480)
 
     # ── Download button ──
     csv = df_filtered.drop(columns=["Risk Level"]).copy()
@@ -950,7 +950,7 @@ elif page == "👥  Employee Risk Table":
         data=csv.to_csv(index=False).encode("utf-8"),
         file_name="employee_risk_predictions.csv",
         mime="text/csv",
-        use_container_width=True,
+        width="stretch",
     )
 
 elif page == "ℹ️  About":
