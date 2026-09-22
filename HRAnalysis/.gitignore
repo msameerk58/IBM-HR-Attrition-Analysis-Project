@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Model file (too large for GitHub)
+model.pkl
+*.pkl
+
+# Log files
+flask_err.txt
+flask_out.txt
+api_outputs.txt
+
+# Data files
+model_comparison.json
+
+# Internal scripts
+build_report.py
+collect_api_outputs.py
+generate_report_screenshots.py
+run_model_comparison.py
+
+# IBM Bob folder
+.agents/
+
+# System files
+.DS_Store
+.env
+Thumbs.db
